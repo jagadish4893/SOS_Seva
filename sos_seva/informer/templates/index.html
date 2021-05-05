@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Report</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="">Home</a></li>
+                    <li class="breadcrumb-item active">Twitter</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<section class="content">
+    <div class="container-fluid">
+        <!-- Info boxes -->
+        <div class="row">
+
+            <div class="clearfix hidden-md-up"></div>
+
+        </div>
+
+        <!-- Main row -->
+
+        <div class="row">
+            <div class="col-md-12">
+                <!-- OPTIONS DROPDOWN -->
+                 <div class="card">
+                    <div class="card-header border-transparent">
+                        <h3 class="card-title">Search</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body p-0">
+                        <div class="search_wrap">
+                            <div class="input-group mb-3 form-group has-search">
+
+                                <input type="text" class="form-control" placeholder="Search" id="ques">
+
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary search-btn" onclick="getResult()">Search</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                 </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+
+        <div id="loader">
+            <img src="{% static 'images/loading.gif' %}" style="margin-top: 10%; height: 250px;">
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <!-- TABLE: LATEST ORDERS -->
+                 <div class="card">
+                    <div class="card-header border-transparent">
+                        <h3 class="card-title">Results</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body p-0">
+                        <div id="results_area">
+
+                        </div>
+                        <!-- /.table-responsive -->
+                    </div>
+
+                 </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!--/. container-fluid -->
+</section>
+<!-- /.content -->
+
+
+<script>
+    var init_flag = false;
+
+    $(document).ready(function () {
+        console.log("ready")
+    })
+
+    function getResult(){
+    var ques = $('#ques').val()
+    $('#results_area').html("");
+    $.ajax({
+        url: "{% url 'informer:get_ques' %}",
+        type: 'POST',
+        data: {'ques':ques},
+        success: function(result){
+            console.log(result)
+            for (tweet in result['tweets']){
+                $('#results_area').append(result['tweets'][tweet]);
+                $('#results_area').append("<br>");
+            }
+        },
+            error:function(err){
+                alert("Error " + err.statusText);
+
+        }
+    });
+}
+
+
+$(document).ajaxStart(function(){
+  // Show image container
+  $("#loader").show();
+});
+$(document).ajaxComplete(function(){
+  // Hide image container
+  $("#loader").hide();
+});
+
+</script>
+
+
+{% endblock %}

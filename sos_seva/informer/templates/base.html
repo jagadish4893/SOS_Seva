@@ -1,0 +1,420 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+  <title>SOS Search</title>
+  <link rel="shortcut icon" href="{% static 'images/fav.ico' %}">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <script src="{% static 'js/jquery3_6.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/datatables.css' %}">
+  <script src="{% static 'js/datatables.js' %}"></script>
+
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+  <div class="wrapper">
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="" class="nav-link">Home</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <!-- Messages Dropdown Menu -->
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="btn btn-primary" href="{% url 'informer:ticket_dashboard' %}" role="button">
+            <i class="fas " aria-hidden="true">SOS Seva Dashboard</i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'signup:user_logout' %}" role="button">
+            <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="#" class="brand-link">
+        <img src="{% static 'images/logo.png' %}" alt="Logo" class="brand-image img-circle elevation-3"
+          style="opacity: .8">
+        <span class="brand-text font-weight-light">SOS Search</span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <!--        <div class="image">-->
+          <!--          <img src="{% static 'dist/img/avatar.png' %}" class="img-circle elevation-2" alt="User Image">-->
+          <!--        </div>-->
+          <div class="info">
+
+            <a href="#" class="d-block" title="">
+              {% if request.session.first_name %}
+              {{ request.session.first_name}}
+              {{ request.session.last_name}}
+              {% else %}
+              {{ request.session.username}}
+              {% endif %}
+            </a>
+          </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item selected">
+              <a href="{% url 'isb_db:dashboard' %}" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Search & Verify
+                </p>
+              </a>
+            </li>
+          </ul>
+
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item selected">
+              <a href="{% url 'informer:twitter_search' %}" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Social Media Search
+                </p>
+              </a>
+            </li>
+          </ul>
+
+          <!-- Resource Links -->
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item">
+              <a class="nav-link collapsed py-1" href="#submenu1sub1" data-toggle="collapse"
+                data-target="#submenu1sub1"><span>Resource Links &nbsp; <i class="fas fa-chevron-down fa-xs"></i></span></a>
+
+              <div class="collapse" id="submenu1sub1" aria-expanded="false">
+                <ul class="flex-column nav pl-4">
+
+                  <!-- Ahemdabad -->
+                  <li class="nav-item">
+                    <a class="nav-link p-1" href="#Ahemdabad" data-toggle="collapse" data-target="#Ahemdabad">
+                      <i class="fa fa-fw fa-clock-o"></i> Ahemdabad &nbsp; <i class="fas fa-chevron-down fa-xs"></i></a>
+                    <div class="collapse" id="Ahemdabad" aria-expanded="false">
+                      <ul class="flex-column nav pl-4">
+                        <li class="nav-item">
+                          <a class="nav-link p-1" target="_blank" href="https://covidamd.com">
+                            <i class="fa fa-fw fa-dashboard"></i> Covid Ahemdabad </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+
+                  <!-- Vodadara/Baroda -->
+                  <li class="nav-item">
+                    <a class="nav-link p-1" href="#Vodadara" data-toggle="collapse" data-target="#Vodadara">
+                      <i class="fa fa-fw fa-clock-o"></i> Vodadara/Baroda &nbsp; <i class="fas fa-chevron-down fa-xs"></i></a>
+                    <div class="collapse" id="Vodadara" aria-expanded="false">
+                      <ul class="flex-column nav pl-4">
+                        <li class="nav-item">
+                          <a class="nav-link p-1" target="_blank" href="https://covidbaroda.com">
+                            <i class="fa fa-fw fa-dashboard"></i> Covid Vadodara/Baroda </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+
+                  <!-- Beed, MH -->
+                  <li class="nav-item">
+                    <a class="nav-link p-1" href="#Beed" data-toggle="collapse" data-target="#Beed">
+                      <i class="fa fa-fw fa-clock-o"></i> Beed, MH &nbsp; <i class="fas fa-chevron-down fa-xs"></i></a>
+                    <div class="collapse" id="Beed" aria-expanded="false">
+                      <ul class="flex-column nav pl-4">
+                        <li class="nav-item">
+                          <a class="nav-link p-1" target="_blank" href="https://covidbeed.com">
+                            <i class="fa fa-fw fa-dashboard"></i> Covid Beed </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+
+
+                  <!-- Blore -->
+                  <li class="nav-item">
+                    <a class="nav-link p-1" href="#Bangalore" data-toggle="collapse" data-target="#Bangalore">
+                      <i class="fa fa-fw fa-clock-o"></i> Beed, MH &nbsp; <i class="fas fa-chevron-down fa-xs"></i></a>
+                    <div class="collapse" id="Bangalore" aria-expanded="false">
+                      <ul class="flex-column nav pl-4">
+                        <li class="nav-item">
+                          <a class="nav-link p-1" target="_blank" href="https://covidbengaluru.com">
+                            <i class="fa fa-fw fa-dashboard"></i> Covid Bengaluru </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+
+
+                  <!-- Chhattisgarh -->
+                  <li class="nav-item">
+                    <a class="nav-link p-1" href="#Chhattisgarh" data-toggle="collapse" data-target="#Chhattisgarh">
+                      <i class="fa fa-fw fa-clock-o"></i> Beed, MH &nbsp; <i class="fas fa-chevron-down fa-xs"></i></a>
+                    <div class="collapse" id="Chhattisgarh" aria-expanded="false">
+                      <ul class="flex-column nav pl-4">
+                        <li class="nav-item">
+                          <a class="nav-link p-1" target="_blank" href="https://covidcgh.com">
+                            <i class="fa fa-fw fa-dashboard"></i> Covid Chhattisgarh </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+
+
+                   <!-- Delhi -->
+                  <li class="nav-item">
+                    <a class="nav-link p-1" href="#delhi" data-toggle="collapse" data-target="#delhi">
+                      <i class="fa fa-fw fa-clock-o"></i> Delhi &nbsp; <i class="fas fa-chevron-down fa-xs"></i></a>
+                    <div class="collapse" id="delhi" aria-expanded="false">
+                      <ul class="flex-column nav pl-4">
+                        <li class="nav-item">
+                          <a class="nav-link p-1" target="_blank" href="https://coviddelhi.com">
+                            <i class="fa fa-fw fa-dashboard"></i> Covid Delhi </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+
+
+                    <!-- Gandhinagar, Gujarat-->
+                  <li class="nav-item">
+                    <a class="nav-link p-1" href="#Gandhinagar" data-toggle="collapse" data-target="#Gandhinagar">
+                      <i class="fa fa-fw fa-clock-o"></i> Gandhinagar, Gujarat &nbsp; <i class="fas fa-chevron-down fa-xs"></i></a>
+                    <div class="collapse" id="Gandhinagar" aria-expanded="false">
+                      <ul class="flex-column nav pl-4">
+                        <li class="nav-item">
+                          <a class="nav-link p-1" target="_blank" href="https://covidgandhinagar.com">
+                            <i class="fa fa-fw fa-dashboard"></i> Covid Gandhinagar, Gujarat </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+
+
+                  <!-- MP -->
+                  <li class="nav-item">
+                    <a class="nav-link p-1" href="#MP" data-toggle="collapse" data-target="#MP">
+                      <i class="fa fa-fw fa-clock-o"></i> Madhya Pradesh &nbsp; <i class="fas fa-chevron-down fa-xs"></i></a>
+                    <div class="collapse" id="MP" aria-expanded="false">
+                      <ul class="flex-column nav pl-4">
+                        <li class="nav-item">
+                          <a class="nav-link p-1" target="_blank" href="https://covidmp.com">
+                            <i class="fa fa-fw fa-dashboard"></i> Covid Madhya Pradesh</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+
+                  <!-- Nagpur -->
+                  <li class="nav-item">
+                    <a class="nav-link p-1" href="#Nagpur" data-toggle="collapse" data-target="#Nagpur">
+                      <i class="fa fa-fw fa-clock-o"></i> Nagpur &nbsp; <i class="fas fa-chevron-down fa-xs"></i></a>
+                    <div class="collapse" id="Nagpur" aria-expanded="false">
+                      <ul class="flex-column nav pl-4">
+                        <li class="nav-item">
+                          <a class="nav-link p-1" target="_blank" href="https://covidnagpur.com">
+                            <i class="fa fa-fw fa-dashboard"></i> Covid Nagpur</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+
+                   <!-- Nashik -->
+                  <li class="nav-item">
+                    <a class="nav-link p-1" href="#Nashik" data-toggle="collapse" data-target="#Nashik">
+                      <i class="fa fa-fw fa-clock-o"></i> Nashik &nbsp; <i class="fas fa-chevron-down fa-xs"></i></a>
+                    <div class="collapse" id="Nashik" aria-expanded="false">
+                      <ul class="flex-column nav pl-4">
+                        <li class="nav-item">
+                          <a class="nav-link p-1" target="_blank" href="https://covidnashik.com">
+                            <i class="fa fa-fw fa-dashboard"></i> Covid Nashik</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+
+                  <!-- Pune -->
+                  <li class="nav-item">
+                    <a class="nav-link p-1" href="#Pune" data-toggle="collapse" data-target="#Pune">
+                      <i class="fa fa-fw fa-clock-o"></i> Pune &nbsp; <i class="fas fa-chevron-down fa-xs"></i></a>
+                    <div class="collapse" id="Pune" aria-expanded="false">
+                      <ul class="flex-column nav pl-4">
+                        <li class="nav-item">
+                          <a class="nav-link p-1" target="_blank" href="https://covidpune.com">
+                            <i class="fa fa-fw fa-dashboard"></i> Covid Pune</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+
+                   <!-- Rajkot -->
+                  <li class="nav-item">
+                    <a class="nav-link p-1" href="#Rajkot" data-toggle="collapse" data-target="#Rajkot">
+                      <i class="fa fa-fw fa-clock-o"></i> Rajkot, Gujarat &nbsp; <i class="fas fa-chevron-down fa-xs"></i></a>
+                    <div class="collapse" id="Rajkot" aria-expanded="false">
+                      <ul class="flex-column nav pl-4">
+                        <li class="nav-item">
+                          <a class="nav-link p-1" target="_blank" href="https://covidrkt.com">
+                            <i class="fa fa-fw fa-dashboard"></i> Covid Rajkot, Gujarat</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+
+
+                   <!-- Surat -->
+                  <li class="nav-item">
+                    <a class="nav-link p-1" href="#Surat" data-toggle="collapse" data-target="#Surat">
+                      <i class="fa fa-fw fa-clock-o"></i> Surat, Gujarat &nbsp; <i class="fas fa-chevron-down fa-xs"></i></a>
+                    <div class="collapse" id="Surat" aria-expanded="false">
+                      <ul class="flex-column nav pl-4">
+                        <li class="nav-item">
+                          <a class="nav-link p-1" target="_blank" href="https://covidsurat.com">
+                            <i class="fa fa-fw fa-dashboard"></i> Covid Surat, Gujarat</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+
+
+                   <!-- TN -->
+                  <li class="nav-item">
+                    <a class="nav-link p-1" href="#TN" data-toggle="collapse" data-target="#TN">
+                      <i class="fa fa-fw fa-clock-o"></i> Tamil Nadu &nbsp; <i class="fas fa-chevron-down fa-xs"></i></a>
+                    <div class="collapse" id="TN" aria-expanded="false">
+                      <ul class="flex-column nav pl-4">
+                        <li class="nav-item">
+                          <a class="nav-link p-1" target="_blank" href="https://covidtnadu.com">
+                            <i class="fa fa-fw fa-dashboard"></i> Covid Tamil Nadu</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+
+                  <!-- West Bengal  -->
+                  <li class="nav-item">
+                    <a class="nav-link p-1" href="#WB" data-toggle="collapse" data-target="#WB">
+                      <i class="fa fa-fw fa-clock-o"></i> West Bengal&nbsp; <i class="fas fa-chevron-down fa-xs"></i></a>
+                    <div class="collapse" id="WB" aria-expanded="false">
+                      <ul class="flex-column nav pl-4">
+                        <li class="nav-item">
+                          <a class="nav-link p-1" target="_blank" href="https://covidwb.com">
+                            <i class="fa fa-fw fa-dashboard"></i> Covid West Bengal</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+
+
+                  <!-- Telangana -->
+                  <li class="nav-item">
+                    <a class="nav-link p-1" href="#Telangana" data-toggle="collapse" data-target="#Telangana">
+                      <i class="fa fa-fw fa-clock-o"></i> Telangana&nbsp; <i class="fas fa-chevron-down fa-xs"></i></a>
+                    <div class="collapse" id="Telangana" aria-expanded="false">
+                      <ul class="flex-column nav pl-4">
+                        <li class="nav-item">
+                          <a class="nav-link p-1" target="_blank" href="https://covidtelangana.com">
+                            <i class="fa fa-fw fa-dashboard"></i> Covid Telangana</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+
+                </ul>
+
+              </div>
+            </li>
+          </ul>
+
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+
+
+      <!-- Main content -->
+      {% block content %}
+      {% endblock %}
+      <!-- /.content -->
+
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+
+    <!-- Main Footer -->
+    <!--  <footer class="main-footer">-->
+    <!--    <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>-->
+    <!--    All rights reserved.-->
+    <!--    <div class="float-right d-none d-sm-inline-block">-->
+    <!--      <b>Version</b> 3.0.5-->
+    <!--    </div>-->
+    <!--  </footer>-->
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- REQUIRED SCRIPTS -->
+  <!-- jQuery -->
+  <!--<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>-->
+  <!-- Bootstrap -->
+  <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <!-- overlayScrollbars -->
+  <script src="{% static 'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+  <!-- AdminLTE App -->
+  <script src="{% static 'dist/js/adminlte.js' %}"></script>
+
+  <!-- OPTIONAL SCRIPTS -->
+  <script src="{% static 'dist/js/demo.js' %}"></script>
+  <script src="{% static 'js/custom.js' %}"></script>
+  <!-- PAGE PLUGINS -->
+  <!-- jQuery Mapael -->
+  <!--<script src="{% static 'plugins/jquery-mousewheel/jquery.mousewheel.js' %}"></script>-->
+  <script src="{% static 'plugins/raphael/raphael.min.js' %}"></script>
+  <script src="{% static 'plugins/jquery-mapael/jquery.mapael.min.js' %}"></script>
+  <script src="{% static 'plugins/jquery-mapael/maps/usa_states.min.js' %}"></script>
+  <!-- ChartJS -->
+  <!--<script src="{% static 'plugins/chart.js/Chart.min.js' %}"></script>-->
+
+  <!-- PAGE SCRIPTS -->
+  <!--<script src="{% static 'dist/js/pages/dashboard2.js' %}"></script>-->
+
+</body>
+
+</html>

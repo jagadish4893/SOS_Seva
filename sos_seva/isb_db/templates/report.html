@@ -1,0 +1,394 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Report</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="">Home</a></li>
+                    <li class="breadcrumb-item active">Data Source</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<section class="content">
+    <div class="container-fluid">
+        <!-- Info boxes -->
+        <div class="row">
+
+            <div class="clearfix hidden-md-up"></div>
+
+        </div>
+
+        <!-- Main row -->
+
+        <div class="row">
+            <div class="col-md-12">
+                <!-- OPTIONS DROPDOWN -->
+                <div class="card">
+                    <div class="card-header border-transparent">
+                        <h3 class="card-title">Options</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body p-0">
+                        <div class="table_options form-inline">
+                            <div class="form-group mb-2 col-md-4">
+                                <label for="city_selector">City</label> &nbsp;&nbsp;&nbsp;
+                                <select id="city_selector" class="form-select" onchange="getSelectValue();">
+                                    {% for city in cities %}
+                                    <option value="{{city}}">{{city}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group mb-2 col-md-4">
+                                <label for="category_selector">Category</label> &nbsp;&nbsp;&nbsp;
+                                <select id="category_selector" class="form-select" onchange="getSelectValue();">
+                                    {% for category in categories %}
+                                    <option value="{{category}}">{{category}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            
+                            <div class="form-group mb-2 col-md-2">
+                                <button class="btn btn-block btn-primary"  style="cursor:pointer;" data-toggle="modal" data-target="#info_new_modal">Create New</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <!-- TABLE: LATEST ORDERS -->
+                <div class="card">
+                    <div class="card-header border-transparent">
+                        <h3 class="card-title">Information</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table id="info_from_db" class="dataTable" style="width: 100%;" role="grid">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>PoC</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
+                                    <th>Pincode</th>
+                                    <th>Email</th>
+                                    <th>Notes</th>
+                                    <th>Verification Status</th>
+                                    <th>Verified Date</th>
+                                    <th>Verified By</th>
+<!--                                    <th>City</th>-->
+<!--                                    <th>Category</th>-->
+                                    <th>View</th>
+                                </tr>
+                                </thead>
+                            </table>
+
+                        </div>
+                        <!-- /.table-responsive -->
+                    </div>
+
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!--/. container-fluid -->
+
+
+    <!-- Modal -->
+    <div class="modal fade bd-example-modal-lg" id="info_modal" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">View</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    {% include "resource_details.html" %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Modal New Entry-->
+    <div class="modal fade bd-example-modal-lg" id="info_new_modal" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">New Entry</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    {% include "new_resource.html" %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer style="padding: 20px">
+        Data Sourced from : ISB
+    </footer>
+</section>
+<!-- /.content -->
+
+
+<script>
+    var init_flag = false;
+
+    $(document).ready(function () {
+        console.log("ready")
+        // load_dataTable()
+        $('#info_modal').find('form').trigger('reset');
+    })
+
+    function reloadPage(){
+        window.location = window.location
+    }
+
+    function load_dataTable() {         // Function to load data table
+        
+        var city = $('#city_selector option:selected').val();
+        var category = $('#category_selector option:selected').val();
+        console.log(init_flag)
+
+        console.log(city)
+        console.log(category)
+        var oTable = $('#info_from_db').dataTable({
+            orderCellsTop: true,
+            pageLength: 50,
+            processing: true,
+            serverSide: true,
+            bSort: false,
+            "ajax": {
+                    "url": "{% url 'isb_db:info_ret' %}",
+                    "type": "GET",
+                    "data": {'city': city, 'category': category}
+                }
+        });
+        console.log("{% url 'isb_db:info_ret' %}")
+    }
+
+    $('#city_selector').on('change', function(){
+        reloadPage()
+    });
+
+    $('#category_selector').on('change', function(){
+        reloadPage()
+    });
+
+
+    window.addEventListener('load', function(){         // state retention of city
+    if (localStorage.city) {
+        var sel = document.querySelector('#city_selector');
+        sel.value = localStorage.city;
+        }
+    if (localStorage.category) {                        // state retention of category
+        var sel = document.querySelector('#category_selector');
+        sel.value = localStorage.category;
+        }
+    load_dataTable()
+
+    });
+
+    function getSelectValue(){
+    var city = document.querySelector('#city_selector');
+    localStorage.city = city.value;
+
+    var category = document.querySelector('#category_selector');
+    localStorage.category = category.value;
+
+    location.reload();
+}
+
+var modal_id;
+
+function show_modal(id)             // show edit modal
+{
+    modal_id = id;
+    // console.log("Modal ID is" + modal_id);
+    $('.tabs-container').css('opacity','0.4');
+    $('#loading').show();
+//    $("#passes_page").hide();
+            $.ajax({
+                url: "{% url 'isb_db:get_details' %}",
+                data: {'pk':id},
+                type: 'POST',
+                success: function(result){
+                    $('#loading').hide();
+                    // console.log(result);
+                    $('.tabs-container').css('opacity','1');
+                    //console.log(result);
+                    $("#pk").val(modal_id);
+                    $("#name").val(result['resource_details'].name);
+                    $("#poc").val(result['resource_details'].poc);
+                    $("#phone").val(result['resource_details'].phone);
+                    $("#email").val(result['resource_details'].email);
+                    $("#notes").val(result['resource_details'].notes);
+                    $("#address").val(result['resource_details'].address);
+                    $("#pincode").val(result['resource_details'].pincode);
+                    if (result['resource_details'].status == 'Y'){
+                        // $("#status_y").checked=true;
+                        $("#status_y").prop("checked", true);
+                    }
+                    else if (result['resource_details'].status == 'N'){
+                        // $("#status_n").checked=true;
+                        $("#status_n").prop("checked", true)
+                    }
+
+                    // $("#status").val(result['resource_details'].status);
+                    $("#verified_date").val(result['resource_details'].verified_date);
+                    $("#verified_by").val(result['resource_details'].verified_by);
+
+                },
+                    error:function(err){
+                        Alert("Error",err.statusText);
+
+                }
+        });
+}
+//
+$('#info_modal').on('hidden.bs.modal', function () {
+    // $(this).find('form').trigger('reset');
+    $("#status_y").prop("checked", false);
+    $("#status_n").prop("checked", false);
+
+})
+
+function update_resource(){             // function to update resource value to DB
+
+    var pk =  $('#pk').val();
+    var user = $('#user').val();
+    var name = $('#name').val();
+    var poc = $('#poc').val();
+    var phone = $('#phone').val();
+    var email = $('#email').val();
+    var notes = $('#notes').val();
+    var status = $("input[name='status']:checked").val();
+    // var verified_data = $('#verified_data').val();
+    // var verified_by = $('#verified_by').val();
+    var address = $('#address').val();
+    var pincode = $('#pincode').val();
+
+    var data = {
+        "pk": pk,
+        "user": user,
+        "name": name,
+        "poc": poc,
+        "phone": phone,
+        "email": email,
+        "notes": notes,
+        "status": status,
+        "address":address,
+        "pincode": pincode
+    }
+
+    console.log(data)
+
+    $.ajax({
+        url: "{% url 'isb_db:update_info' %}",
+        type:'POST',
+        data: data,
+        success: function(result){
+            // alert("Data Updated!")
+            alert(result['result'])
+            reloadPage()
+        },
+        error: function(error){
+            Alert("Error",error.statusText);
+        }
+    });
+}
+
+
+function new_resource(){             // function to create new resource value to DB
+
+var user = $('#user').val();
+var name = $('#new_name').val();
+var poc = $('#new_poc').val();
+var phone = $('#new_phone').val();
+var email = $('#new_email').val();
+var notes = $('#new_notes').val();
+var status = $("input[name='new_status']:checked").val();
+var new_city = $('#new_city').val();
+var new_category = $('#category_new').val();
+var address = $('#new_address').val();
+var pincode = $('#new_pincode').val();
+
+var data = {
+    "user": user,
+    "name": name,
+    "poc": poc,
+    "phone": phone,
+    "email": email,
+    "notes": notes,
+    "status": status,
+    "city": new_city,
+    "category": new_category,
+    "address": address,
+    "pincode": pincode
+}
+
+console.log(data)
+
+$.ajax({
+    url: "{% url 'isb_db:new_resource' %}",
+    type:'POST',
+    data: data,
+    success: function(result){
+        // alert("Data Updated!")
+        alert(result['result'])
+        reloadPage()
+    },
+    error: function(error){
+        Alert("Error",error.statusText);
+    }
+});
+}
+
+
+$('#info_new_modal').on('hidden.bs.modal', function () {
+    // $(this).find('form').trigger('reset');
+    $("#new_status_y").prop("checked", false);
+    $("#new_status_n").prop("checked", false);
+
+})
+
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "admin/change_list.html" %}
+{% load i18n admin_static %}
+
+{% block object-tools-items %}
+{{ block.super }}
+<script>
+function reload(){
+    location.reload();
+}
+    //setInterval(function(){ location.reload(); }, 3000);
+</script>
+<li>
+    <a href="" onclick="reload()"> Refresh </a>
+</li>
+<li>
+    <a href="{% url 'isb_db:dashboard' %}" class="btn btn-high btn-success">Go to Search Dashboard</a>
+</li>
+{% endblock %}

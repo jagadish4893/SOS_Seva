@@ -1,0 +1,94 @@
+<div>
+    <form name="details" id="new_details" method="post">
+        <input type="hidden" name="flag" id="user" value="{{ request.session.username }}"/>
+        <div class="form-row">
+
+            <div class="form-group col-md-6 mb-0">
+                <label>Name:</label>
+                <input placeholder="Name" type="text" name="name" class="form-control" id="new_name">
+            </div>
+
+            <div class="form-group  col-md-6 mb-0">
+                <label>PoC:</label>
+                <input placeholder="PoC" type="text" name="poc" class="form-control" id="new_poc">
+            </div>
+        </div>
+        <br/>
+
+        <div class="form-row">
+
+            <div class="form-group col-md-6 mb-0">
+                <label>Phone No:</label>
+                <input placeholder="Phone No" type="text" name="phone" class="form-control" id="new_phone">
+            </div>
+
+            <div class="form-group  col-md-6 mb-0">
+                <label>Email:</label>
+                <input placeholder="Email" type="text" name="email" class="form-control" id="new_email">
+            </div>
+        </div>
+        <br/>
+
+        <div class="form-row">
+            <div class="form-group col-md-6 mb-0">
+                <label>Address:</label>
+                <input placeholder="Address" type="text" name="new_address" class="form-control" id="new_address">
+            </div>
+
+            <div class="form-group  col-md-6 mb-0">
+                <label>Pincode:</label>
+                <input placeholder="Pincode" type="text" name="new_pincode" class="form-control" id="new_pincode">
+            </div>
+        </div>
+        <br/>
+
+        <div class="form-row">
+
+            <div class="form-group col-md-6 mb-0">
+                <label>City:</label>
+                <input placeholder="City" type="text" name="city" class="form-control" id="new_city">
+            </div>
+
+            <div class="form-group  col-md-6 mb-0">
+                <label>Category:</label>
+                <select id="category_new" class="form-control custom-select">
+                    {% for category in categories %}
+                    <option value="{{category}}">{{category}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <br/>
+
+        <div class="form-row">
+            <div class="form-group col-md-12 mb-0">
+                <label for="notes">Notes:</label>
+                <textarea style="height:100px;" class="form-control" placeholder="Notes" name="notes" id="new_notes"></textarea>
+            </div>
+        </div>
+        <br/>
+        <div class="form-row">
+            <div class="form-group  col-md-6 mb-0">
+                <label for="status_div">Verification Status:</label>
+                <div id="status_div">
+                    <label for="new_status_y">Yes</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" class="form-check-input" name="new_status" id="new_status_y" value="Y">
+                    <label for="new_status_n">No</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" class="form-check-input" name="new_status" id="new_status_n" value="N">
+                </div>
+
+            </div>
+        </div>
+        
+        <br/>
+        <div class="form-row" style="justify-content: center;">
+            <div class="form-group">
+                <div>
+                    <a class="btn btn-primary" onclick="new_resource();" id="submit_btn"
+                       style="float: left;margin-left: 10px;">Save Changes</a>
+                </div>
+            </div>
+        </div>
+    </form>
+    <br>
+</div>

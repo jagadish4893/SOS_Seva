@@ -1,0 +1,66 @@
+.table_options {
+    padding-left: 20px;
+}
+
+#city_selector {
+    width: 65%;
+    text-align: center;
+}
+
+#category_selector {
+    width: 65%;
+    text-align: center;
+}
+
+#isb_table_submit {
+    text-align: center;
+    justify-content: center;
+    padding-top: 6px;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+#info_from_db {
+    width: 100%;
+    padding-left: 20px;
+}
+
+.search_wrap{
+    display: flex;
+    justify-content: center;
+}
+
+.has-search {
+    width: 75%;
+}
+
+.results_area{
+    padding-left: 20px;
+}
+
+
+
+#loader {
+    display: none;
+    margin: 0px;
+    padding: 0px;
+    position: fixed;
+    right: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(102, 102, 102);
+    z-index: 30001;
+    opacity: 0.8;
+    text-align: center;
+    bottom: 0;
+}
+
+#info_from_db_length{
+    padding-left: 20px;
+}
+
+#info_from_db_filter{
+    padding-right: 20px;
+}
+

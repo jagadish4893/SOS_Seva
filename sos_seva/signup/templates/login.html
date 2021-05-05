@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>SOS Seva | Log in</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="{% static 'images/Logo.ico' %}">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="{% static 'plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <script src="{% static 'js/authenticate.js' %}"></script>
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-logo">
+    <!--a href="#"><img src="{% static 'images/logo.png' %}" alt="Logo" style="width:191px;" alt="Friends of The Farmers"></a-->
+  </div>
+  <!--div class="login-logo">
+    <a href="#"><img src="{% static 'dist/img/kalamitr_logo_blue.png' %}" alt="Logo" style="height: 41px;border-radius: 10px;"><b>Kalamitr</b></a>
+  </div-->
+  <!-- /.login-logo -->
+  <div class="card">
+    <div class="card-body login-card-body">
+      <p class="login-box-msg">Sign in to start your session</p>
+
+      <!--form method="post" id="supplier_login_form" action="{% url 'signup:authenticateUser' %}"-->
+       <form method="post" id="supplier_login_form" action="" onsubmit="return function()" name="form">
+
+        <div class="input-group mb-3">
+
+          <input required type="text" class="form-control" placeholder="Username" value="" id="username" name="username">
+
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+            <input required type="password" class="form-control" placeholder="Password" value="" id="password" name="password">
+
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        <div class="row" style="text-align:center">
+          <!-- /.col -->
+          <div class="col">
+            <button type="submit" class="btn btn-primary btn-block" id="">Sign In</button>
+
+          </div>
+          <br><br>
+<!--          <div class="container register">-->
+<!--            <p>No account? <a href="{% url 'signup:register' %}">Register</a></p>-->
+<!--          </div>-->
+          <!-- /.col -->
+        </div>
+
+        <div class="row" id="message">
+          <div class="col">
+          {% if messages %}
+        {% for message in messages %} &nbsp
+        <h6 > {{message}} </h6>
+          {% endfor %}
+          {% endif %}
+          </div>
+        </div>
+
+
+        <div class="row" style="text-align:center;height:10px">
+          <!-- /.col -->
+          <div class="col">
+            <span id="login_message">
+              {% if 'login_message' in request.session %}
+                {{request.session.login_message}}
+              {% endif %}
+            </span>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
+    </div>
+    <!-- /.login-card-body -->
+  </div>
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery -->
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+<script>
+  $("#login_message").fadeOut(10000);
+</script>
+<script>
+  function validation()
+  {
+    var username=document.forms["form"]["username"].value;
+    var password=document.forms["form"]["password"].value;
+    if(username=="")
+    {
+
+        document.getElementById("username")
+        return false;
+    }
+    if(password=="")
+    {
+        document.getElementById("password")
+        return false;
+    }
+    return true;
+  }
+
+
+</script>
+
+
+</body>
+</html>
