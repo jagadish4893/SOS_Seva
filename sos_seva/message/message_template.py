@@ -1,7 +1,7 @@
 lang_templates = {
                     "en": {"lang":"English",
-                        "user_template":"Hi {},\n\n We got to know that you are located at {}, {} and need help for {} and {}, following authorities will contact you very soon.\n As per your request the following authorities are informed already.\n\n District Police Head Quarters.\n District Hospital.\n Local Coordinating Bodies.\n Dist. Collector.",
-                        "question":"Please enter your details in same Format: \nName;Address;Pincode;Purpose;Other Details \neg:Amit;Dehradun;400005;need medicines;which medical shops are open?"
+                        "user_template":"Hi {},\n\n We understand that you are located at {}, {} and need help for {} and {}. \nWe acknowledge your request. One of our volunteers will connect with you as soon as possible.",
+                        "question":"Thanks for connecting. This is a Covid SOS service provided by Tech Mahindra and Google India to enable us to help you faster.\nPlease enter your details in the following format: \nName;Address;Pincode;Purpose;Other Details \neg:Amit;Dehradun;400005;need oxygen. where can I get it?; I have tried calling in my area;"
                     },
                     "hi": {"lang":"हिंदी",
                         "user_template":"{},\n\n हमें पता चला कि आप {}, {} यहां स्थित हैं और {} और {} के लिए मदद चाहिए। \n हम आपसे बहुत जल्द संपर्क करेंगे। आपके अनुरोध पर निम्नलिखित अधिकारियों को सूचित किया गया है।\n\n जिला पुलिस मुख्यालय।\n जिला अस्पताल।\n स्थानीय समन्वय निकायों।\n जिला। एकत्र करनेवाला।",
